@@ -68,29 +68,20 @@ namespace RefutationBrowser
         private object SerializeNode(TreeNode node)
         {
             var jsonElement = (JsonElement)node.Tag;
-            var nodeObject = new JsonObject();
+            var nodeObject = JsonNode.Parse(jsonElement.GetRawText()) as JsonObject;
 
-            foreach (var property in jsonElement.EnumerateObject())
+            if (nodeObject != null)
             {
-                if (property.Name == "Body")
+                var counterArgumentsList = new List<object>();
+                foreach (TreeNode childNode in node.Nodes)
                 {
-                    nodeObject[property.Name] = property.Value.GetString();
+                    counterArgumentsList.Add(SerializeNode(childNode));
                 }
-                else
+
+                if (counterArgumentsList.Count > 0)
                 {
-                    nodeObject[property.Name] = property.Value.Clone();
+                    nodeObject["CounterArguments"] = JsonSerializer.SerializeToNode(counterArgumentsList);
                 }
-            }
-
-            var counterArgumentsList = new List<object>();
-            foreach (TreeNode childNode in node.Nodes)
-            {
-                counterArgumentsList.Add(SerializeNode(childNode));
-            }
-
-            if (counterArgumentsList.Count > 0)
-            {
-                nodeObject["CounterArguments"] = JsonSerializer.SerializeToElement(counterArgumentsList);
             }
 
             return nodeObject;
@@ -120,23 +111,16 @@ namespace RefutationBrowser
             {
                 var jsonElement = (JsonElement)currentSelectedNode.Tag;
 
-                // Create a mutable copy of the JsonElement
-                var updatedJson = new JsonObject();
+                // Create a mutable JsonNode to modify the Body content
+                var updatedJsonNode = JsonNode.Parse(jsonElement.GetRawText()) as JsonObject;
 
-                foreach (var property in jsonElement.EnumerateObject())
+                if (updatedJsonNode != null && updatedJsonNode.ContainsKey("Body"))
                 {
-                    if (property.Name == "Body")
-                    {
-                        updatedJson[property.Name] = richTextBox1.Text; // Update the Body with new text
-                    }
-                    else
-                    {
-                        updatedJson[property.Name] = property.Value.Clone();
-                    }
+                    updatedJsonNode["Body"] = richTextBox1.Text; // Update the Body with new text
                 }
 
                 // Update the TreeNode's Tag with the new JsonElement
-                currentSelectedNode.Tag = JsonSerializer.Deserialize<JsonElement>(updatedJson.ToJsonString());
+                currentSelectedNode.Tag = JsonDocument.Parse(updatedJsonNode.ToJsonString()).RootElement;
             }
         }
 

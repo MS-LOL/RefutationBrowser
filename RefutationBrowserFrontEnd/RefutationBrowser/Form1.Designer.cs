@@ -43,6 +43,10 @@
             howToUseToolStripMenuItem = new ToolStripMenuItem();
             homeToolStripMenuItem = new ToolStripMenuItem();
             treeView1 = new TreeView();
+            argumentsToolStripMenuItem = new ToolStripMenuItem();
+            addToolStripMenuItem = new ToolStripMenuItem();
+            removeToolStripMenuItem = new ToolStripMenuItem();
+            renameToolStripMenuItem = new ToolStripMenuItem();
             groupBox1.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -73,7 +77,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, refutationsToolStripMenuItem, helpToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, refutationsToolStripMenuItem, helpToolStripMenuItem, argumentsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(7, 3, 0, 3);
@@ -167,6 +171,31 @@
             treeView1.TabIndex = 3;
             treeView1.AfterSelect += treeView1_AfterSelect;
             // 
+            // argumentsToolStripMenuItem
+            // 
+            argumentsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addToolStripMenuItem, removeToolStripMenuItem, renameToolStripMenuItem });
+            argumentsToolStripMenuItem.Name = "argumentsToolStripMenuItem";
+            argumentsToolStripMenuItem.Size = new Size(95, 24);
+            argumentsToolStripMenuItem.Text = "Arguments";
+            // 
+            // addToolStripMenuItem
+            // 
+            addToolStripMenuItem.Name = "addToolStripMenuItem";
+            addToolStripMenuItem.Size = new Size(224, 26);
+            addToolStripMenuItem.Text = "Add";
+            // 
+            // removeToolStripMenuItem
+            // 
+            removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            removeToolStripMenuItem.Size = new Size(224, 26);
+            removeToolStripMenuItem.Text = "Remove";
+            // 
+            // renameToolStripMenuItem
+            // 
+            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            renameToolStripMenuItem.Size = new Size(224, 26);
+            renameToolStripMenuItem.Text = "Rename";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -202,5 +231,9 @@
         private TreeView treeView1;
         private RichTextBox richTextBox1;
         private ToolStripMenuItem homeToolStripMenuItem;
+        private ToolStripMenuItem argumentsToolStripMenuItem;
+        private ToolStripMenuItem addToolStripMenuItem;
+        private ToolStripMenuItem removeToolStripMenuItem;
+        private ToolStripMenuItem renameToolStripMenuItem;
     }
 }
