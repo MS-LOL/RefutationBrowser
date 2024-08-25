@@ -1,0 +1,42 @@
+{
+  "ProgramName": "RefutationBrowser",
+  "Arguments": [
+    {
+      "Name": "Point1",
+      "Body": "Body of the argument",
+      "Children": [
+        {
+          "Name": "Point1Refutation1",
+          "Body": "The refutation of Point1",
+          "Children": []
+        },
+        {
+          "Name": "Point1Refutatio2",
+          "Body": "The second refutation of Point1",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Name": "Point2",
+      "Body": "The body of point2",
+      "Children": [
+        {
+          "Name": "Point2Refutation1",
+          "Body": "The refutation of Point2",
+          "Children": []
+        },
+        {
+          "Name": "Point2Refutation2",
+          "Body": "The second refutation of Point2",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Name": "Point3",
+      "Body": "The body of point3",
+      "Children": []
+    }
+  ]
+}
