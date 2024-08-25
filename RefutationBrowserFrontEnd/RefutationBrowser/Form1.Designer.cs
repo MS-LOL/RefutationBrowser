@@ -28,23 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TreeNode treeNode1 = new TreeNode("Not all AI art");
-            TreeNode treeNode2 = new TreeNode("AI is transformative and Fair Use");
-            TreeNode treeNode3 = new TreeNode("Theft deprives people");
-            TreeNode treeNode4 = new TreeNode("AI art is theft", new TreeNode[] { treeNode1, treeNode2, treeNode3 });
-            TreeNode treeNode5 = new TreeNode("AI doesn't overclock computers");
-            TreeNode treeNode6 = new TreeNode("But physical art is more damaging");
-            TreeNode treeNode7 = new TreeNode("AI is bad for the envoronment", new TreeNode[] { treeNode5, treeNode6 });
-            TreeNode treeNode8 = new TreeNode("CSAM was removed from Laion-5B");
-            TreeNode treeNode9 = new TreeNode("AI is trained off of CSAM", new TreeNode[] { treeNode8 });
-            TreeNode treeNode10 = new TreeNode("AI cannot replace artists");
-            TreeNode treeNode11 = new TreeNode("AI takes away people's jobs", new TreeNode[] { treeNode10 });
-            TreeNode treeNode12 = new TreeNode("INVALID ARGUMENT: MOVIE != REALITY");
-            TreeNode treeNode13 = new TreeNode("The prevoius point applies to Non reprogrammed  T-800s");
-            TreeNode treeNode14 = new TreeNode("The T-800 was programmed to do so", new TreeNode[] { treeNode13 });
-            TreeNode treeNode15 = new TreeNode("The T-800 helped in the second movie", new TreeNode[] { treeNode14 });
-            TreeNode treeNode16 = new TreeNode("Issac Asimov's 3 laws of robotics");
-            TreeNode treeNode17 = new TreeNode("AI is bad because The Terminator", new TreeNode[] { treeNode12, treeNode15, treeNode16 });
             groupBox1 = new GroupBox();
             richTextBox1 = new RichTextBox();
             menuStrip1 = new MenuStrip();
@@ -67,9 +50,11 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(richTextBox1);
-            groupBox1.Location = new Point(210, 30);
+            groupBox1.Location = new Point(240, 40);
+            groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(662, 569);
+            groupBox1.Padding = new Padding(3, 4, 3, 4);
+            groupBox1.Size = new Size(757, 759);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Home";
@@ -77,20 +62,22 @@
             // 
             // richTextBox1
             // 
-            richTextBox1.Location = new Point(0, 22);
+            richTextBox1.Location = new Point(0, 29);
+            richTextBox1.Margin = new Padding(3, 4, 3, 4);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(662, 547);
+            richTextBox1.Size = new Size(756, 728);
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = "Rich Text Box";
             richTextBox1.TextChanged += richTextBox1_TextChanged;
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, refutationsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(884, 24);
+            menuStrip1.Padding = new Padding(7, 3, 0, 3);
+            menuStrip1.Size = new Size(1010, 30);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -98,27 +85,27 @@
             // 
             fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exportToolStripMenuItem, importToolStripMenuItem, saveToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
+            fileToolStripMenuItem.Size = new Size(46, 24);
             fileToolStripMenuItem.Text = "File";
             // 
             // exportToolStripMenuItem
             // 
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(110, 22);
+            exportToolStripMenuItem.Size = new Size(137, 26);
             exportToolStripMenuItem.Text = "Export";
             exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
             // 
             // importToolStripMenuItem
             // 
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(110, 22);
+            importToolStripMenuItem.Size = new Size(137, 26);
             importToolStripMenuItem.Text = "Import";
             importToolStripMenuItem.Click += importToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(110, 22);
+            saveToolStripMenuItem.Size = new Size(137, 26);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
@@ -126,20 +113,20 @@
             // 
             refutationsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { searchToolStripMenuItem, counterpointsToolStripMenuItem });
             refutationsToolStripMenuItem.Name = "refutationsToolStripMenuItem";
-            refutationsToolStripMenuItem.Size = new Size(54, 20);
+            refutationsToolStripMenuItem.Size = new Size(67, 24);
             refutationsToolStripMenuItem.Text = "Search";
             // 
             // searchToolStripMenuItem
             // 
             searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            searchToolStripMenuItem.Size = new Size(134, 22);
+            searchToolStripMenuItem.Size = new Size(167, 26);
             searchToolStripMenuItem.Text = "Arguments";
             searchToolStripMenuItem.Click += searchToolStripMenuItem_Click;
             // 
             // counterpointsToolStripMenuItem
             // 
             counterpointsToolStripMenuItem.Name = "counterpointsToolStripMenuItem";
-            counterpointsToolStripMenuItem.Size = new Size(134, 22);
+            counterpointsToolStripMenuItem.Size = new Size(167, 26);
             counterpointsToolStripMenuItem.Text = "Refutations";
             counterpointsToolStripMenuItem.Click += counterpointsToolStripMenuItem_Click;
             // 
@@ -147,82 +134,49 @@
             // 
             helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { whatIsThisToolStripMenuItem, howToUseToolStripMenuItem, homeToolStripMenuItem });
             helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            helpToolStripMenuItem.Size = new Size(44, 20);
+            helpToolStripMenuItem.Size = new Size(55, 24);
             helpToolStripMenuItem.Text = "Help";
             // 
             // whatIsThisToolStripMenuItem
             // 
             whatIsThisToolStripMenuItem.Name = "whatIsThisToolStripMenuItem";
-            whatIsThisToolStripMenuItem.Size = new Size(140, 22);
+            whatIsThisToolStripMenuItem.Size = new Size(175, 26);
             whatIsThisToolStripMenuItem.Text = "What is this?";
             whatIsThisToolStripMenuItem.Click += whatIsThisToolStripMenuItem_Click;
             // 
             // howToUseToolStripMenuItem
             // 
             howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            howToUseToolStripMenuItem.Size = new Size(140, 22);
+            howToUseToolStripMenuItem.Size = new Size(175, 26);
             howToUseToolStripMenuItem.Text = "How to use";
             howToUseToolStripMenuItem.Click += howToUseToolStripMenuItem_Click;
             // 
             // homeToolStripMenuItem
             // 
             homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            homeToolStripMenuItem.Size = new Size(140, 22);
+            homeToolStripMenuItem.Size = new Size(175, 26);
             homeToolStripMenuItem.Text = "Home";
             homeToolStripMenuItem.Click += homeToolStripMenuItem_Click;
             // 
             // treeView1
             // 
-            treeView1.Location = new Point(12, 30);
+            treeView1.Location = new Point(14, 40);
+            treeView1.Margin = new Padding(3, 4, 3, 4);
             treeView1.Name = "treeView1";
-            treeNode1.Name = "Node1";
-            treeNode1.Text = "Not all AI art";
-            treeNode2.Name = "Node2";
-            treeNode2.Text = "AI is transformative and Fair Use";
-            treeNode3.Name = "Node3";
-            treeNode3.Text = "Theft deprives people";
-            treeNode4.Name = "Node0";
-            treeNode4.Text = "AI art is theft";
-            treeNode5.Name = "Node5";
-            treeNode5.Text = "AI doesn't overclock computers";
-            treeNode6.Name = "Node6";
-            treeNode6.Text = "But physical art is more damaging";
-            treeNode7.Name = "Node4";
-            treeNode7.Text = "AI is bad for the envoronment";
-            treeNode8.Name = "Node8";
-            treeNode8.Text = "CSAM was removed from Laion-5B";
-            treeNode9.Name = "Node7";
-            treeNode9.Text = "AI is trained off of CSAM";
-            treeNode10.Name = "Node10";
-            treeNode10.Text = "AI cannot replace artists";
-            treeNode11.Name = "Node9";
-            treeNode11.Text = "AI takes away people's jobs";
-            treeNode12.Name = "Node12";
-            treeNode12.Text = "INVALID ARGUMENT: MOVIE != REALITY";
-            treeNode13.Name = "Node15";
-            treeNode13.Text = "The prevoius point applies to Non reprogrammed  T-800s";
-            treeNode14.Name = "Node14";
-            treeNode14.Text = "The T-800 was programmed to do so";
-            treeNode15.Name = "Node13";
-            treeNode15.Text = "The T-800 helped in the second movie";
-            treeNode16.Name = "Node16";
-            treeNode16.Text = "Issac Asimov's 3 laws of robotics";
-            treeNode17.Name = "Node11";
-            treeNode17.Text = "AI is bad because The Terminator";
-            treeView1.Nodes.AddRange(new TreeNode[] { treeNode4, treeNode7, treeNode9, treeNode11, treeNode17 });
-            treeView1.Size = new Size(192, 569);
+            treeView1.Size = new Size(219, 757);
             treeView1.TabIndex = 3;
             treeView1.AfterSelect += treeView1_AfterSelect;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(884, 611);
+            ClientSize = new Size(1010, 815);
             Controls.Add(treeView1);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Refutation Browser";
             groupBox1.ResumeLayout(false);

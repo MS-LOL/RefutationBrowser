@@ -8,6 +8,7 @@ namespace RefutationBrowser
     {
         public string PointName;
         public string PointBody;
+        public TreeNode currentSelectedNode;
 
         public Form1()
         {
@@ -51,7 +52,7 @@ namespace RefutationBrowser
         }
         private void PopulateCounterArguments(TreeNode parentNode, JsonElement argument)
         {
-            if (argument.TryGetProperty("CounterArguments", out JsonElement counterArguments))
+            if (argument.TryGetProperty("Children", out JsonElement counterArguments))
             {
                 foreach (var counterArgument in counterArguments.EnumerateArray())
                 {
@@ -66,36 +67,77 @@ namespace RefutationBrowser
         }
         private object SerializeNode(TreeNode node)
         {
-            var argument = new
-            {
-                Name = node.Text,
-                Body = ((JsonElement)node.Tag).GetProperty("Body").GetString(),
-                CounterArguments = new List<object>()
-            };
+            var jsonElement = (JsonElement)node.Tag;
+            var nodeObject = new JsonObject();
 
-            foreach (TreeNode childNode in node.Nodes)
+            foreach (var property in jsonElement.EnumerateObject())
             {
-                ((List<object>)argument.CounterArguments).Add(SerializeNode(childNode));
+                if (property.Name == "Body")
+                {
+                    nodeObject[property.Name] = property.Value.GetString();
+                }
+                else
+                {
+                    nodeObject[property.Name] = property.Value.Clone();
+                }
             }
 
-            return argument;
+            var counterArgumentsList = new List<object>();
+            foreach (TreeNode childNode in node.Nodes)
+            {
+                counterArgumentsList.Add(SerializeNode(childNode));
+            }
+
+            if (counterArgumentsList.Count > 0)
+            {
+                nodeObject["CounterArguments"] = JsonSerializer.SerializeToElement(counterArgumentsList);
+            }
+
+            return nodeObject;
         }
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            TreeNode selectedNode = e.Node;
-            if (selectedNode != null)
+            currentSelectedNode = e.Node;
+            if (currentSelectedNode != null && currentSelectedNode.Tag != null)
             {
-                // Assuming you store the entire JSON structure in the Tag property of TreeNode
-                var jsonElement = (JsonElement)selectedNode.Tag;
+                var jsonElement = (JsonElement)currentSelectedNode.Tag;
 
-                string body = jsonElement.GetProperty("Body").GetString();
-                updateOutput(selectedNode.Text, body);
+                if (jsonElement.TryGetProperty("Body", out JsonElement bodyElement))
+                {
+                    string body = bodyElement.GetString();
+                    updateOutput(currentSelectedNode.Text, body);
+                }
+                else
+                {
+                    updateOutput(currentSelectedNode.Text, string.Empty);
+                }
             }
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
+            if (currentSelectedNode != null && currentSelectedNode.Tag != null)
+            {
+                var jsonElement = (JsonElement)currentSelectedNode.Tag;
 
+                // Create a mutable copy of the JsonElement
+                var updatedJson = new JsonObject();
+
+                foreach (var property in jsonElement.EnumerateObject())
+                {
+                    if (property.Name == "Body")
+                    {
+                        updatedJson[property.Name] = richTextBox1.Text; // Update the Body with new text
+                    }
+                    else
+                    {
+                        updatedJson[property.Name] = property.Value.Clone();
+                    }
+                }
+
+                // Update the TreeNode's Tag with the new JsonElement
+                currentSelectedNode.Tag = JsonSerializer.Deserialize<JsonElement>(updatedJson.ToJsonString());
+            }
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
