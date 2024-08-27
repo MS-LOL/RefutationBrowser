@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             groupBox1 = new GroupBox();
             richTextBox1 = new RichTextBox();
             menuStrip1 = new MenuStrip();
@@ -35,18 +36,17 @@
             exportToolStripMenuItem = new ToolStripMenuItem();
             importToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
-            refutationsToolStripMenuItem = new ToolStripMenuItem();
-            searchToolStripMenuItem = new ToolStripMenuItem();
-            counterpointsToolStripMenuItem = new ToolStripMenuItem();
+            argumentsToolStripMenuItem = new ToolStripMenuItem();
+            addToolStripMenuItem = new ToolStripMenuItem();
+            rootNodeToolStripMenuItem = new ToolStripMenuItem();
+            childNodeToolStripMenuItem = new ToolStripMenuItem();
+            removeToolStripMenuItem = new ToolStripMenuItem();
+            renameToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             whatIsThisToolStripMenuItem = new ToolStripMenuItem();
             howToUseToolStripMenuItem = new ToolStripMenuItem();
             homeToolStripMenuItem = new ToolStripMenuItem();
             treeView1 = new TreeView();
-            argumentsToolStripMenuItem = new ToolStripMenuItem();
-            addToolStripMenuItem = new ToolStripMenuItem();
-            removeToolStripMenuItem = new ToolStripMenuItem();
-            renameToolStripMenuItem = new ToolStripMenuItem();
             groupBox1.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -71,13 +71,13 @@
             richTextBox1.Name = "richTextBox1";
             richTextBox1.Size = new Size(756, 728);
             richTextBox1.TabIndex = 0;
-            richTextBox1.Text = "Rich Text Box";
+            richTextBox1.Text = resources.GetString("richTextBox1.Text");
             richTextBox1.TextChanged += richTextBox1_TextChanged;
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, refutationsToolStripMenuItem, helpToolStripMenuItem, argumentsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, argumentsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(7, 3, 0, 3);
@@ -113,26 +113,47 @@
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
-            // refutationsToolStripMenuItem
+            // argumentsToolStripMenuItem
             // 
-            refutationsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { searchToolStripMenuItem, counterpointsToolStripMenuItem });
-            refutationsToolStripMenuItem.Name = "refutationsToolStripMenuItem";
-            refutationsToolStripMenuItem.Size = new Size(67, 24);
-            refutationsToolStripMenuItem.Text = "Search";
+            argumentsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addToolStripMenuItem, removeToolStripMenuItem, renameToolStripMenuItem });
+            argumentsToolStripMenuItem.Name = "argumentsToolStripMenuItem";
+            argumentsToolStripMenuItem.Size = new Size(95, 24);
+            argumentsToolStripMenuItem.Text = "Arguments";
             // 
-            // searchToolStripMenuItem
+            // addToolStripMenuItem
             // 
-            searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            searchToolStripMenuItem.Size = new Size(167, 26);
-            searchToolStripMenuItem.Text = "Arguments";
-            searchToolStripMenuItem.Click += searchToolStripMenuItem_Click;
+            addToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { rootNodeToolStripMenuItem, childNodeToolStripMenuItem });
+            addToolStripMenuItem.Name = "addToolStripMenuItem";
+            addToolStripMenuItem.Size = new Size(243, 26);
+            addToolStripMenuItem.Text = "Add...";
             // 
-            // counterpointsToolStripMenuItem
+            // rootNodeToolStripMenuItem
             // 
-            counterpointsToolStripMenuItem.Name = "counterpointsToolStripMenuItem";
-            counterpointsToolStripMenuItem.Size = new Size(167, 26);
-            counterpointsToolStripMenuItem.Text = "Refutations";
-            counterpointsToolStripMenuItem.Click += counterpointsToolStripMenuItem_Click;
+            rootNodeToolStripMenuItem.Name = "rootNodeToolStripMenuItem";
+            rootNodeToolStripMenuItem.Size = new Size(241, 26);
+            rootNodeToolStripMenuItem.Text = "Root node";
+            rootNodeToolStripMenuItem.Click += rootNodeToolStripMenuItem_Click;
+            // 
+            // childNodeToolStripMenuItem
+            // 
+            childNodeToolStripMenuItem.Name = "childNodeToolStripMenuItem";
+            childNodeToolStripMenuItem.Size = new Size(241, 26);
+            childNodeToolStripMenuItem.Text = "Child node of selected";
+            childNodeToolStripMenuItem.Click += childNodeToolStripMenuItem_Click;
+            // 
+            // removeToolStripMenuItem
+            // 
+            removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            removeToolStripMenuItem.Size = new Size(243, 26);
+            removeToolStripMenuItem.Text = "Remove selected node";
+            removeToolStripMenuItem.Click += removeToolStripMenuItem_Click;
+            // 
+            // renameToolStripMenuItem
+            // 
+            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            renameToolStripMenuItem.Size = new Size(243, 26);
+            renameToolStripMenuItem.Text = "Rename selected node";
+            renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -144,21 +165,21 @@
             // whatIsThisToolStripMenuItem
             // 
             whatIsThisToolStripMenuItem.Name = "whatIsThisToolStripMenuItem";
-            whatIsThisToolStripMenuItem.Size = new Size(175, 26);
+            whatIsThisToolStripMenuItem.Size = new Size(224, 26);
             whatIsThisToolStripMenuItem.Text = "What is this?";
             whatIsThisToolStripMenuItem.Click += whatIsThisToolStripMenuItem_Click;
             // 
             // howToUseToolStripMenuItem
             // 
             howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            howToUseToolStripMenuItem.Size = new Size(175, 26);
+            howToUseToolStripMenuItem.Size = new Size(224, 26);
             howToUseToolStripMenuItem.Text = "How to use";
             howToUseToolStripMenuItem.Click += howToUseToolStripMenuItem_Click;
             // 
             // homeToolStripMenuItem
             // 
             homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            homeToolStripMenuItem.Size = new Size(175, 26);
+            homeToolStripMenuItem.Size = new Size(224, 26);
             homeToolStripMenuItem.Text = "Home";
             homeToolStripMenuItem.Click += homeToolStripMenuItem_Click;
             // 
@@ -170,31 +191,7 @@
             treeView1.Size = new Size(219, 757);
             treeView1.TabIndex = 3;
             treeView1.AfterSelect += treeView1_AfterSelect;
-            // 
-            // argumentsToolStripMenuItem
-            // 
-            argumentsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addToolStripMenuItem, removeToolStripMenuItem, renameToolStripMenuItem });
-            argumentsToolStripMenuItem.Name = "argumentsToolStripMenuItem";
-            argumentsToolStripMenuItem.Size = new Size(95, 24);
-            argumentsToolStripMenuItem.Text = "Arguments";
-            // 
-            // addToolStripMenuItem
-            // 
-            addToolStripMenuItem.Name = "addToolStripMenuItem";
-            addToolStripMenuItem.Size = new Size(224, 26);
-            addToolStripMenuItem.Text = "Add";
-            // 
-            // removeToolStripMenuItem
-            // 
-            removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            removeToolStripMenuItem.Size = new Size(224, 26);
-            removeToolStripMenuItem.Text = "Remove";
-            // 
-            // renameToolStripMenuItem
-            // 
-            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            renameToolStripMenuItem.Size = new Size(224, 26);
-            renameToolStripMenuItem.Text = "Rename";
+            treeView1.MouseDown += treeView1_MouseDown;
             // 
             // Form1
             // 
@@ -204,6 +201,7 @@
             Controls.Add(treeView1);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
@@ -222,9 +220,6 @@
         private ToolStripMenuItem exportToolStripMenuItem;
         private ToolStripMenuItem importToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem;
-        private ToolStripMenuItem refutationsToolStripMenuItem;
-        private ToolStripMenuItem searchToolStripMenuItem;
-        private ToolStripMenuItem counterpointsToolStripMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem whatIsThisToolStripMenuItem;
         private ToolStripMenuItem howToUseToolStripMenuItem;
@@ -235,5 +230,7 @@
         private ToolStripMenuItem addToolStripMenuItem;
         private ToolStripMenuItem removeToolStripMenuItem;
         private ToolStripMenuItem renameToolStripMenuItem;
+        private ToolStripMenuItem rootNodeToolStripMenuItem;
+        private ToolStripMenuItem childNodeToolStripMenuItem;
     }
 }
