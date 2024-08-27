@@ -165,21 +165,21 @@
             // whatIsThisToolStripMenuItem
             // 
             whatIsThisToolStripMenuItem.Name = "whatIsThisToolStripMenuItem";
-            whatIsThisToolStripMenuItem.Size = new Size(175, 26);
+            whatIsThisToolStripMenuItem.Size = new Size(224, 26);
             whatIsThisToolStripMenuItem.Text = "What is this?";
             whatIsThisToolStripMenuItem.Click += whatIsThisToolStripMenuItem_Click;
             // 
             // howToUseToolStripMenuItem
             // 
             howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            howToUseToolStripMenuItem.Size = new Size(175, 26);
+            howToUseToolStripMenuItem.Size = new Size(224, 26);
             howToUseToolStripMenuItem.Text = "How to use";
             howToUseToolStripMenuItem.Click += howToUseToolStripMenuItem_Click;
             // 
             // homeToolStripMenuItem
             // 
             homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            homeToolStripMenuItem.Size = new Size(175, 26);
+            homeToolStripMenuItem.Size = new Size(224, 26);
             homeToolStripMenuItem.Text = "Home";
             homeToolStripMenuItem.Click += homeToolStripMenuItem_Click;
             // 
