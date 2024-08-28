@@ -23,6 +23,14 @@ namespace RefutationBrowser
             //richTextBox1.Text = Body;
             groupBox1.Invalidate();
             richTextBox1.Invalidate();
+            if (Name == "What is this program?" || Name == "Home" || Name == "How to use this program")
+            {
+                richTextBox1.ReadOnly = true;
+            }
+            else
+            {
+                richTextBox1.ReadOnly = false;
+            }
         }
         private void ApplyFormatting(string text)
         {
@@ -58,7 +66,7 @@ namespace RefutationBrowser
                     }
                 }
                 // Check for Underlines
-                else if (text.Substring(currentIndex).StartsWith("_")
+                else if (text.Substring(currentIndex).StartsWith("_"))
                 {
                     int endIndex = text.IndexOf("_", currentIndex + 1);
                     if (endIndex > -1)
@@ -121,6 +129,10 @@ namespace RefutationBrowser
                 else if (richTextBox1.SelectionFont.Italic)
                 {
                     result.Append("*" + line + "*");
+                }
+                else if (richTextBox1.SelectionFont.Underline)
+                {
+                    result.Append("_" + line + "_");
                 }
                 else if (richTextBox1.SelectionFont.Size == 16 && richTextBox1.SelectionFont.Bold)
                 {
