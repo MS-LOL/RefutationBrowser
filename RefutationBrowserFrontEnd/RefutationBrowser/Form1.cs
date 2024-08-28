@@ -1,6 +1,8 @@
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace RefutationBrowser
 {
@@ -16,10 +18,121 @@ namespace RefutationBrowser
         }
         public void UpdateOutput(string Name, string Body)
         {
+            ApplyFormatting(Body);
             groupBox1.Text = Name;
-            richTextBox1.Text = Body;
+            //richTextBox1.Text = Body;
             groupBox1.Invalidate();
             richTextBox1.Invalidate();
+        }
+        private void ApplyFormatting(string text)
+        {
+            richTextBox1.Clear();
+
+            int currentIndex = 0;
+            while (currentIndex < text.Length)
+            {
+                // Check for Bold
+                if (text.Substring(currentIndex).StartsWith("**"))
+                {
+                    int endIndex = text.IndexOf("**", currentIndex + 2);
+                    if (endIndex > -1)
+                    {
+                        richTextBox1.SelectionStart = richTextBox1.TextLength;
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Bold);
+                        richTextBox1.AppendText(text.Substring(currentIndex + 2, endIndex - currentIndex - 2));
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
+                        currentIndex = endIndex + 2;
+                    }
+                }
+                // Check for Italics
+                else if (text.Substring(currentIndex).StartsWith("*"))
+                {
+                    int endIndex = text.IndexOf("*", currentIndex + 1);
+                    if (endIndex > -1)
+                    {
+                        richTextBox1.SelectionStart = richTextBox1.TextLength;
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Italic);
+                        richTextBox1.AppendText(text.Substring(currentIndex + 1, endIndex - currentIndex - 1));
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
+                        currentIndex = endIndex + 1;
+                    }
+                }
+                // Check for Underlines
+                else if (text.Substring(currentIndex).StartsWith("_")
+                {
+                    int endIndex = text.IndexOf("_", currentIndex + 1);
+                    if (endIndex > -1)
+                    {
+                        richTextBox1.SelectionStart = richTextBox1.TextLength;
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Underline);
+                        richTextBox1.AppendText(text.Substring(currentIndex + 1, endIndex - currentIndex - 1));
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
+                        currentIndex = endIndex + 1;
+                    }
+                }
+                // Check for Headers
+                else if (text.Substring(currentIndex).StartsWith("#"))
+                {
+                    int endIndex = text.IndexOf("\n", currentIndex + 1);
+                    if (endIndex > -1)
+                    {
+                        richTextBox1.SelectionStart = richTextBox1.TextLength;
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font.FontFamily, 16, FontStyle.Bold);
+                        richTextBox1.AppendText(text.Substring(currentIndex + 1, endIndex - currentIndex - 1) + Environment.NewLine);
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
+                        currentIndex = endIndex + 1;
+                    }
+                    else
+                    {
+                        // If no newline, treat the rest as header
+                        richTextBox1.SelectionStart = richTextBox1.TextLength;
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font.FontFamily, 16, FontStyle.Bold);
+                        richTextBox1.AppendText(text.Substring(currentIndex + 1));
+                        break;
+                    }
+                }
+                // Plain text
+                else
+                {
+                    int nextSpecial = text.IndexOfAny(new[] { '*', '#', '_'}, currentIndex);
+                    if (nextSpecial == -1)
+                    {
+                        richTextBox1.AppendText(text.Substring(currentIndex));
+                        break;
+                    }
+                    else
+                    {
+                        richTextBox1.AppendText(text.Substring(currentIndex, nextSpecial - currentIndex));
+                        currentIndex = nextSpecial;
+                    }
+                }
+                
+            }
+        }
+        private string ConvertToEscapeSequences()
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (string line in richTextBox1.Lines)
+            {
+                if (richTextBox1.SelectionFont.Bold)
+                {
+                    result.Append("**" + line + "**");
+                }
+                else if (richTextBox1.SelectionFont.Italic)
+                {
+                    result.Append("*" + line + "*");
+                }
+                else if (richTextBox1.SelectionFont.Size == 16 && richTextBox1.SelectionFont.Bold)
+                {
+                    result.Append("#" + line);
+                }
+                else
+                {
+                    result.Append(line);
+                }
+                result.Append(Environment.NewLine);
+            }
+            return result.ToString();
         }
         private void LoadJson(string filePath)
         {
@@ -111,7 +224,7 @@ namespace RefutationBrowser
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (currentSelectedNode != null && currentSelectedNode.Tag != null)
+            if (currentSelectedNode != null && currentSelectedNode.Tag != null) //If the rich text box text has changes and a node is selected, The text of a node has changed
             {
                 var jsonElement = (JsonElement)currentSelectedNode.Tag;
 
@@ -120,7 +233,7 @@ namespace RefutationBrowser
 
                 if (updatedJsonNode != null && updatedJsonNode.ContainsKey("Body"))
                 {
-                    updatedJsonNode["Body"] = richTextBox1.Text; // Update the Body with new text
+                    updatedJsonNode["Body"] = ConvertToEscapeSequences(); // Update the Body with new text
                 }
 
                 // Update the TreeNode's Tag with the new JsonElement
@@ -165,11 +278,11 @@ namespace RefutationBrowser
         private void whatIsThisToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            UpdateOutput("What is this program?", "This is the Debate Refutation Browser. \r\nThis program is for the use of:\r\n1) Checking common arguments used in certain debates.\r\n2) Coming up with counterpoints.\r\n3) Sharing this information with others.\r\nWhen debating on the interwebz, you may find yourself unable to tackle all arguments used at the same time.\r\nThis program fixes that issue by allowing you to view a hierarchy of arguments used in debates, plan out responses, and co-ordinate a debate with facts and logic rather than slander and insults.");
+            UpdateOutput("What is this program?", "#This is the Debate Refutation Browser.\nThis program is for the use of:\n1) Checking common arguments used in certain debates.\n2) Coming up with counterpoints.\n3) Sharing this information with others.\nWhen debating on the interwebz, you may find yourself unable to tackle all arguments used at the same time.\nThis program fixes that issue by allowing you to view a hierarchy of arguments used in debates, plan out responses, and co-ordinate a debate with facts and logic rather than slander and insults."); // \r is not needed
         }
         private void howToUseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string HowtoUse = "This is self explanatory.";
+            string HowtoUse = "This is self explanatory.\r\n\r\nFine, i'll explain. The text box uses the Rich Text Format (RTF). Because this is being stored in Json rather than a .rtf file, we will use escape characters.\r\nThe escape characters are in the HTML tags format.\r\n\r\n<b>Bold</b> is written.";
             UpdateOutput("How to use this program", HowtoUse);
         }
         private void homeToolStripMenuItem_Click(object sender, EventArgs e)
