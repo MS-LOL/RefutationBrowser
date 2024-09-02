@@ -1,8 +1,13 @@
 using System.IO;
+using System.Drawing;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using Markdig;
+using static SautinSoft.HtmlToRtf;
+using static SautinSoft.RtfToHtml;
+using SautinSoft;
 
 namespace RefutationBrowser
 {
@@ -18,7 +23,7 @@ namespace RefutationBrowser
         }
         public void UpdateOutput(string Name, string Body)
         {
-            ApplyFormatting(Body);
+            //LoadMarkdownIntoRichTextBox(Body);
             groupBox1.Text = Name;
             //richTextBox1.Text = Body;
             groupBox1.Invalidate();
@@ -32,119 +37,40 @@ namespace RefutationBrowser
                 richTextBox1.ReadOnly = false;
             }
         }
-        private void ApplyFormatting(string text)
+        private void LoadMarkdownIntoRichTextBox(string markdown)
         {
-            richTextBox1.Clear();
+            var pipeline = new MarkdownPipelineBuilder().Build();
+            var html = Markdown.ToHtml(markdown, pipeline);
 
-            int currentIndex = 0;
-            while (currentIndex < text.Length)
+            richTextBox1.Rtf = ConvertHtmlToRtf(html);
+        }
+        private string ConvertHtmlToRtf(string html)
+        {
+            HtmlToRtf htmlToRtf = new HtmlToRtf
             {
-                // Check for Bold
-                if (text.Substring(currentIndex).StartsWith("**"))
-                {
-                    int endIndex = text.IndexOf("**", currentIndex + 2);
-                    if (endIndex > -1)
-                    {
-                        richTextBox1.SelectionStart = richTextBox1.TextLength;
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Bold);
-                        richTextBox1.AppendText(text.Substring(currentIndex + 2, endIndex - currentIndex - 2));
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
-                        currentIndex = endIndex + 2;
-                    }
-                }
-                // Check for Italics
-                else if (text.Substring(currentIndex).StartsWith("*"))
-                {
-                    int endIndex = text.IndexOf("*", currentIndex + 1);
-                    if (endIndex > -1)
-                    {
-                        richTextBox1.SelectionStart = richTextBox1.TextLength;
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Italic);
-                        richTextBox1.AppendText(text.Substring(currentIndex + 1, endIndex - currentIndex - 1));
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
-                        currentIndex = endIndex + 1;
-                    }
-                }
-                // Check for Underlines
-                else if (text.Substring(currentIndex).StartsWith("_"))
-                {
-                    int endIndex = text.IndexOf("_", currentIndex + 1);
-                    if (endIndex > -1)
-                    {
-                        richTextBox1.SelectionStart = richTextBox1.TextLength;
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Underline);
-                        richTextBox1.AppendText(text.Substring(currentIndex + 1, endIndex - currentIndex - 1));
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
-                        currentIndex = endIndex + 1;
-                    }
-                }
-                // Check for Headers
-                else if (text.Substring(currentIndex).StartsWith("#"))
-                {
-                    int endIndex = text.IndexOf("\n", currentIndex + 1);
-                    if (endIndex > -1)
-                    {
-                        richTextBox1.SelectionStart = richTextBox1.TextLength;
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font.FontFamily, 16, FontStyle.Bold);
-                        richTextBox1.AppendText(text.Substring(currentIndex + 1, endIndex - currentIndex - 1) + Environment.NewLine);
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
-                        currentIndex = endIndex + 1;
-                    }
-                    else
-                    {
-                        // If no newline, treat the rest as header
-                        richTextBox1.SelectionStart = richTextBox1.TextLength;
-                        richTextBox1.SelectionFont = new Font(richTextBox1.Font.FontFamily, 16, FontStyle.Bold);
-                        richTextBox1.AppendText(text.Substring(currentIndex + 1));
-                        break;
-                    }
-                }
-                // Plain text
-                else
-                {
-                    int nextSpecial = text.IndexOfAny(new[] { '*', '#', '_'}, currentIndex);
-                    if (nextSpecial == -1)
-                    {
-                        richTextBox1.AppendText(text.Substring(currentIndex));
-                        break;
-                    }
-                    else
-                    {
-                        richTextBox1.AppendText(text.Substring(currentIndex, nextSpecial - currentIndex));
-                        currentIndex = nextSpecial;
-                    }
-                }
-                
+                // Optional: Set options here, such as disabling images or setting the encoding.
+            };
+
+            string rtf = string.Empty;
+            bool success = htmlToRtf.ConvertStringToRtf(html, ref rtf);
+
+            if (success)
+            {
+                return rtf;
+            }
+            else
+            {
+                MessageBox.Show("Failed to convert HTML to RTF");
+                return string.Empty;
             }
         }
-        private string ConvertToEscapeSequences()
+        private string ConvertToMarkdown()
         {
-            StringBuilder result = new StringBuilder();
-            foreach (string line in richTextBox1.Lines)
-            {
-                if (richTextBox1.SelectionFont.Bold)
-                {
-                    result.Append("**" + line + "**");
-                }
-                else if (richTextBox1.SelectionFont.Italic)
-                {
-                    result.Append("*" + line + "*");
-                }
-                else if (richTextBox1.SelectionFont.Underline)
-                {
-                    result.Append("_" + line + "_");
-                }
-                else if (richTextBox1.SelectionFont.Size == 16 && richTextBox1.SelectionFont.Bold)
-                {
-                    result.Append("#" + line);
-                }
-                else
-                {
-                    result.Append(line);
-                }
-                result.Append(Environment.NewLine);
-            }
-            return result.ToString();
+            // Converting RichTextBox content back to Markdown
+            // This is a placeholder since directly converting from RichTextBox to Markdown requires parsing the rich text format.
+            // The exact implementation will depend on the complexity of the rich text and markdown features you want to support.
+            string markdownText = "";  // Implement the RTF to Markdown conversion logic here.
+            return markdownText;
         }
         private void LoadJson(string filePath)
         {
@@ -245,7 +171,7 @@ namespace RefutationBrowser
 
                 if (updatedJsonNode != null && updatedJsonNode.ContainsKey("Body"))
                 {
-                    updatedJsonNode["Body"] = ConvertToEscapeSequences(); // Update the Body with new text
+                    updatedJsonNode["Body"] = ConvertToMarkdown(); // Save as markdown
                 }
 
                 // Update the TreeNode's Tag with the new JsonElement
